@@ -1,0 +1,28 @@
+//Coded and tested by:
+//Sheekar Banerjee, AI-ML-IOT Solution Engineer  and Researcher
+
+int R0 = 176;
+int R2 = 1000;
+float RS;
+float PPM_acetone;
+  
+void setup() {
+   Serial.begin(9600);
+}
+ 
+void loop() {
+   //  read the input on analog pin 0:
+   int sensorValue = analogRead(A0);
+   //  convert to voltage:
+   float volts = sensorValue * 5;
+   volts = volts / 1023;
+   // calculate RS
+   RS = R2 * (1-volts);
+   RS = RS/volts;
+   // calculate  acetone PPM
+   PPM_acetone = 159.6 - 133.33*(RS/R0);
+   // print out the acetone  concentration:
+   Serial.println("Acetone (C3H6O) Value: ");
+   Serial.println(PPM_acetone);
+   delay(3000); // delay in between reads for stability
+}
